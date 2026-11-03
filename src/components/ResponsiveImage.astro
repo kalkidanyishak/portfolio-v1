@@ -1,0 +1,45 @@
+---
+interface Props {
+  base: string;
+  widths: number[];
+  width: number;
+  height: number;
+  alt: string;
+  sizes: string;
+  loading?: 'eager' | 'lazy';
+  fetchpriority?: 'high' | 'low' | 'auto';
+  class?: string;
+}
+
+const {
+  base,
+  widths,
+  width,
+  height,
+  alt,
+  sizes,
+  loading = 'lazy',
+  fetchpriority = 'auto',
+  class: className,
+} = Astro.props;
+
+const sortedWidths = [...widths].sort((a, b) => a - b);
+const fallbackWidth = sortedWidths.includes(960)
+  ? 960
+  : sortedWidths[Math.floor(sortedWidths.length / 2)];
+const src = `${base}-${fallbackWidth}.webp`;
+const srcset = sortedWidths.map((w) => `${base}-${w}.webp ${w}w`).join(', ');
+---
+
+<img
+  src={src}
+  srcset={srcset}
+  sizes={sizes}
+  width={width}
+  height={height}
+  alt={alt}
+  loading={loading}
+  decoding="async"
+  fetchpriority={fetchpriority}
+  class={className}
+/>

@@ -1,0 +1,141 @@
+---
+import { site } from '../data/site';
+
+const [emailLocal, emailDomain] = site.email.split('@');
+---
+
+<div class="email-copy" data-email-block>
+  <a class="email-copy__link" href={`mailto:${site.email}`}>
+    <span class="email-copy__part">{emailLocal}@</span><span class="email-copy__part">{emailDomain}</span>
+  </a>
+  <button
+    class="email-copy__button"
+    type="button"
+    data-copy-email
+    data-email={site.email}
+    data-magnetic
+    aria-label="Copy email address"
+    aria-describedby="copy-email-status"
+  >
+    <span data-copy-email-label>Copy</span>
+  </button>
+  <span id="copy-email-status" class="email-copy__status" aria-live="polite"></span>
+</div>
+
+<style>
+  .email-copy {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 16px;
+    padding: 12px 14px 12px 20px;
+    border: 1px solid rgba(28, 27, 24, 0.06);
+    border-radius: 18px;
+    background: var(--surface-low);
+    box-shadow: var(--sink);
+  }
+
+  .email-copy__link {
+    color: var(--ink);
+    font-size: clamp(1.02rem, 1.8vw, 1.3rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+    text-decoration: none;
+    background-image: linear-gradient(var(--accent), var(--accent));
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 100% 1px;
+    transition:
+      background-size 320ms var(--ease),
+      color 180ms ease;
+  }
+
+  .email-copy__link:hover,
+  .email-copy__link:focus-visible {
+    color: var(--accent-deep);
+    background-size: 32% 2px;
+  }
+
+  .email-copy__part {
+    display: inline;
+  }
+
+  .email-copy__button {
+    min-height: 42px;
+    margin-left: auto;
+    padding: 0 18px;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 12px;
+    background: var(--surface);
+    box-shadow: var(--raise-sm);
+    color: var(--ink);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition:
+      box-shadow 220ms var(--ease),
+      background-color 220ms ease,
+      color 220ms ease;
+  }
+
+  .email-copy__button:hover,
+  .email-copy__button:focus-visible {
+    color: var(--accent-deep);
+  }
+
+  .email-copy__button:active {
+    box-shadow: var(--sink-sm);
+  }
+
+  .email-copy__button.is-copied {
+    background: var(--accent);
+    box-shadow: var(--sink-sm);
+    color: var(--on-accent);
+    animation: copy-pop 360ms var(--ease-out);
+  }
+
+  @keyframes copy-pop {
+    0% { transform: scale(1); }
+    45% { transform: scale(1.055); }
+    100% { transform: scale(1); }
+  }
+
+  .email-copy__status {
+    flex-basis: 100%;
+    min-height: 0;
+    color: var(--quiet);
+    font-size: 0.76rem;
+  }
+
+  .email-copy__status:not(:empty) {
+    min-height: 1.2em;
+  }
+
+  .email-copy.is-sent .email-copy__link {
+    animation: email-sent 520ms var(--ease-out);
+  }
+
+  @keyframes email-sent {
+    0% { transform: translateX(0); }
+    35% { transform: translateX(3px); }
+    100% { transform: translateX(0); }
+  }
+
+  @media (max-width: 560px) {
+    .email-copy {
+      align-items: flex-start;
+      padding: 18px;
+    }
+
+    .email-copy__link {
+      width: 100%;
+    }
+
+    .email-copy__button {
+      margin-left: 0;
+    }
+  }
+</style>

@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Glyph from '../components/Glyph.astro';
+---
+
+<BaseLayout
+  title="Page not found"
+  description="That page could not be found. Return to Kalkidan Yishak Zerihun’s portfolio."
+  noindex={true}
+>
+  <section class="not-found">
+    <div class="shell">
+      <div class="not-found__panel panel" data-glare data-reveal>
+        <p class="eyebrow">Error / 404</p>
+        <h1>This page is not here.</h1>
+        <p class="not-found__lede">The work is still where you left it.</p>
+        <a class="action" href="/">
+          <span>Back to the portfolio</span>
+          <span class="action__ring"><Glyph direction="right" /></span>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    padding-block:
+      calc(var(--header-height) + clamp(20px, 4vh, 44px))
+      clamp(72px, 12vh, 140px);
+  }
+
+  .not-found__panel {
+    max-width: 780px;
+    padding: var(--pad-panel);
+  }
+
+  .not-found .eyebrow {
+    color: var(--accent);
+  }
+
+  .not-found h1 {
+    max-width: 11ch;
+    margin-top: 22px;
+    font-size: clamp(2.8rem, 7vw, 5.4rem);
+  }
+
+  .not-found__lede {
+    max-width: 38ch;
+    margin-top: 20px;
+    color: var(--muted);
+  }
+
+  .not-found .action {
+    margin-top: 32px;
+  }
+</style>

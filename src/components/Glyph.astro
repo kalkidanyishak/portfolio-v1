@@ -1,0 +1,28 @@
+---
+interface Props {
+  direction?: 'up-right' | 'down' | 'right';
+}
+
+const { direction = 'up-right' } = Astro.props;
+---
+
+<svg class="glyph" viewBox="0 0 20 20" aria-hidden="true" data-dir={direction}>
+  {
+    direction === 'down' ? (
+      <g fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round">
+        <path class="glyph__line" d="M10 3.5 V15" />
+        <path class="glyph__head" d="M5.5 10.5 L10 15.5 L14.5 10.5" />
+      </g>
+    ) : direction === 'right' ? (
+      <g fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round">
+        <path class="glyph__line" d="M3.5 10 H15" />
+        <path class="glyph__head" d="M10.5 5.5 L15.5 10 L10.5 14.5" />
+      </g>
+    ) : (
+      <g fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round">
+        <path class="glyph__line" d="M4.5 15.5 L15 5" />
+        <path class="glyph__head" d="M8.5 5 H15 V11.5" />
+      </g>
+    )
+  }
+</svg>

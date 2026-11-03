@@ -1,0 +1,2333 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EmailCopy from '../components/EmailCopy.astro';
+import Glyph from '../components/Glyph.astro';
+import ResponsiveImage from '../components/ResponsiveImage.astro';
+import { site, socials } from '../data/site';
+import { featuredProject, supportingProjects, explorations } from '../data/projects';
+import { services, workingPrinciples } from '../data/services';
+import { resume } from '../data/resume';
+
+const work = [featuredProject, ...supportingProjects];
+
+const siteUrl = Astro.site?.toString() ?? 'https://resume-aby.pages.dev';
+const pageDescription =
+  'Fullstack developer in Addis Ababa building booking platforms, patient-safety systems and healthcare dashboards, from interface through PostgreSQL to deployment.';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: site.name,
+    url: siteUrl,
+    image: new URL('/og/og-image.jpg', siteUrl).toString(),
+    jobTitle: site.role,
+    description: pageDescription,
+    email: `mailto:${site.email}`,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Addis Ababa',
+      addressCountry: 'ET',
+    },
+    sameAs: [site.links.github, site.links.linkedin, site.links.telegram],
+    knowsAbout: [
+      'Fullstack web development',
+      'Next.js',
+      'React',
+      'TypeScript',
+      'PostgreSQL',
+      'REST API integration',
+      'ElysiaJS',
+      'Linux server deployment',
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Kalkidan Yishak Zerihun · Portfolio',
+    url: siteUrl,
+    description: pageDescription,
+    inLanguage: 'en',
+  },
+];
+---
+
+<BaseLayout
+  title="Kalkidan Yishak Zerihun · Fullstack Developer, Addis Ababa"
+  description={pageDescription}
+  ogTitle="Kalkidan Yishak Zerihun. Thoughtful interfaces. Working systems."
+  ogDescription="Fullstack developer in Addis Ababa. Booking platforms, patient-safety systems and healthcare dashboards, built from interface to deployment."
+  htmlClass="snap-page"
+  structuredData={structuredData}
+>
+  <nav class="chapter-rail" aria-label="Page sections" data-chapter-rail>
+    <a href="#top" data-chapter-link aria-label="Intro"><span class="chapter-rail__dot" aria-hidden="true"></span><span class="chapter-rail__label">Intro</span></a>
+    <a href="#work" data-chapter-link aria-label="Selected work"><span class="chapter-rail__dot" aria-hidden="true"></span><span class="chapter-rail__label">Work</span></a>
+    <a href="#services" data-chapter-link aria-label="Services"><span class="chapter-rail__dot" aria-hidden="true"></span><span class="chapter-rail__label">Services</span></a>
+    <a href="#about" data-chapter-link aria-label="About"><span class="chapter-rail__dot" aria-hidden="true"></span><span class="chapter-rail__label">About</span></a>
+    <a href="#contact" data-chapter-link aria-label="Contact"><span class="chapter-rail__dot" aria-hidden="true"></span><span class="chapter-rail__label">Contact</span></a>
+  </nav>
+
+  <section class="hero chapter" id="top" aria-labelledby="hero-title">
+    <div class="shell">
+      <div class="hero__panel panel" data-glare>
+        <div class="hero__bar">
+          <p class="eyebrow hero__status"><span class="status">Fullstack developer</span></p>
+          <p class="mono hero__bar-mid">Portfolio / 2026</p>
+          <p class="mono hero__bar-end">Addis Ababa, ET</p>
+        </div>
+
+        <div class="hero__grid">
+          <div class="hero__identity">
+            <h1 id="hero-title" data-parallax="0.028">
+              <span class="hero__line"><span>Kalkidan</span></span>
+              <span class="hero__line"><span>Yishak</span></span>
+            </h1>
+          </div>
+
+          <div class="hero__aside">
+            <p class="hero__lede">
+              I build web products end to end: the interfaces people use, the APIs and data behind them, and the deployments that put them live.
+            </p>
+            <div class="hero__actions">
+              <a class="action" href="#work" data-magnetic>
+                <span>See the work</span>
+                <span class="action__ring"><Glyph direction="down" /></span>
+              </a>
+              <a class="quiet-link" href="#contact">
+                <span>Write to me</span>
+                <Glyph />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <dl class="hero__readout">
+          <div>
+            <dt>In production</dt>
+            <dd>Three products</dd>
+          </div>
+          <div>
+            <dt>Domains</dt>
+            <dd>Hospitality · Public health</dd>
+          </div>
+          <div>
+            <dt>Stack</dt>
+            <dd>Next.js · PostgreSQL · Linux</dd>
+          </div>
+          <div>
+            <dt>Location</dt>
+            <dd>Addis Ababa, Ethiopia</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="work-intro chapter" id="work" aria-labelledby="work-title">
+    <div class="shell">
+      <header class="section-head" data-reveal>
+        <div class="section-head__top">
+          <p class="eyebrow">Selected work</p>
+          <span class="section-head__rule" aria-hidden="true"></span>
+        </div>
+        <div class="section-head__row">
+          <h2 id="work-title" data-parallax="0.022">Three products in live environments.</h2>
+          <p class="section-head__lede">
+            Across hospitality and public health. Each note states exactly what I was responsible for.
+          </p>
+        </div>
+      </header>
+
+      <ol class="work-index">
+        {
+          work.map((project, index) => (
+            <li data-reveal style={`--reveal-delay: ${index * 70}ms`}>
+              <a href={`#${project.id}`}>
+                <span class="work-index__num mono">0{index + 1}</span>
+                <span class="work-index__title">{project.title}</span>
+                <span class="work-index__meta">{project.sector} · {project.role}</span>
+                <span class="work-index__go" aria-hidden="true"><Glyph direction="down" /></span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+
+      <div class="work-intro__foot" data-reveal>
+        <p class="mono">Scroll to open each project</p>
+        <a class="quiet-link" href="#more-work">
+          <span>Other work</span>
+          <Glyph />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {
+    work.map((project, index) => (
+      <section
+        class="project chapter"
+        id={project.id}
+        aria-labelledby={`${project.id}-title`}
+      >
+        <div class="shell">
+          <div class="project__meta" data-reveal>
+            <p class="eyebrow">Selected work</p>
+            <p class="mono">Project 0{index + 1} / 03</p>
+          </div>
+
+          <article class="piece panel" data-glare data-reveal>
+            <div class="piece__grid">
+              <div class="piece__visual" data-parallax="0.018">
+                <figure class="still">
+                  <a
+                    class="still__link"
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-frame
+                    data-glare
+                    aria-label={`${project.liveLabel} (opens in a new tab)`}
+                  >
+                    <span class="still__window">
+                      <ResponsiveImage
+                        base={project.image.base}
+                        widths={project.image.widths}
+                        width={project.image.width}
+                        height={project.image.height}
+                        alt={project.image.alt}
+                        sizes="(max-width: 980px) 92vw, 620px"
+                      />
+                    </span>
+                    <span class="still__cue" aria-hidden="true">
+                      <span>{project.imageIsIllustrative ? 'Preview' : 'Open'}</span>
+                      <Glyph />
+                    </span>
+                  </a>
+                  <figcaption>{project.imageNote}</figcaption>
+                </figure>
+
+                <dl class="piece__spec">
+                  <div>
+                    <dt>Client</dt>
+                    <dd>{project.client}</dd>
+                  </div>
+                  <div>
+                    <dt>Role</dt>
+                    <dd>{project.role}</dd>
+                  </div>
+                  <div>
+                    <dt>Stack</dt>
+                    <dd>{project.stack.join(' · ')}</dd>
+                  </div>
+                  <div>
+                    <dt>Status</dt>
+                    <dd><span class="status">Live</span></dd>
+                  </div>
+                </dl>
+              </div>
+
+              <div class="piece__content">
+                <header class="piece__head">
+                  <p class="eyebrow piece__kicker">{project.sector} · {project.role} · {project.year}</p>
+                  <h3 id={`${project.id}-title`} class="piece__title">{project.title}</h3>
+                  {project.fullName && <p class="piece__fullname">{project.fullName}</p>}
+                </header>
+
+                <div class="piece__block piece__block--brief">
+                  <p class="piece__label">Brief</p>
+                  <p class="piece__summary">{project.summary}</p>
+                </div>
+
+                <div class="piece__block piece__block--part">
+                  <p class="piece__label">My part</p>
+                  <p class="piece__contribution">{project.contribution}</p>
+                </div>
+
+                <div class="piece__block piece__block--scope">
+                  <p class="piece__label">Scope</p>
+                  <p class="piece__scope">{project.scope.join(' ')}</p>
+                </div>
+
+                {project.liveNote && <p class="piece__note">{project.liveNote}</p>}
+
+                <a class="chip" href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                  <span>{project.liveLabel}</span>
+                  <Glyph />
+                  <span class="sr-only"> (opens in a new tab)</span>
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    ))
+  }
+
+  <section class="more-screen chapter" id="more-work" aria-labelledby="more-title">
+    <div class="shell">
+      <header class="more__head" data-reveal>
+        <div>
+          <p class="eyebrow">Other work</p>
+          <h2 id="more-title" data-parallax="0.015">Independent and academic projects.</h2>
+        </div>
+        <p>Work outside the client projects above, built to test ideas, learn systems, and ship something real.</p>
+      </header>
+
+      <ol class="more__list">
+        {
+          explorations.map((item, index) => (
+            <li class="more__item panel panel--soft" data-glare data-reveal style={`--reveal-delay: ${index * 70}ms`}>
+              <a href={item.url} target="_blank" rel="noopener noreferrer">
+                <div class="more__top">
+                  <span class="more__context">{item.context}</span>
+                </div>
+                <h3>{item.title}</h3>
+                <p class="more__desc">{item.description}</p>
+                <div class="more__foot">
+                  <span class="more__stack">{item.stack}</span>
+                  <span class="more__go">
+                    {item.linkLabel}
+                    <Glyph />
+                  </span>
+                </div>
+                <span class="sr-only"> (opens in a new tab)</span>
+              </a>
+            </li>
+          ))
+        }
+        <li class="more__item panel panel--soft" data-glare data-reveal style="--reveal-delay: 140ms">
+          <a href="/resume/">
+            <div class="more__top">
+              <span class="more__context">Curriculum vitae · 2026</span>
+            </div>
+            <h3>The full résumé</h3>
+            <p class="more__desc">
+              Projects, leadership, education, recognition and the complete toolkit, all in one print-friendly document.
+            </p>
+            <div class="more__foot">
+              <span class="more__stack">PDF-friendly</span>
+              <span class="more__go">
+                Open the résumé
+                <Glyph />
+              </span>
+            </div>
+          </a>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="services chapter" id="services" aria-labelledby="services-title">
+    <div class="shell">
+      <header class="section-head" data-reveal>
+        <div class="section-head__top">
+          <p class="eyebrow">Services</p>
+          <span class="section-head__rule" aria-hidden="true"></span>
+        </div>
+        <div class="section-head__row">
+          <h2 id="services-title" data-parallax="0.022">Three ways I can help.</h2>
+          <p class="section-head__lede">
+            Most products need a combination. I can join at the interface, build the systems underneath, or carry the whole product to launch.
+          </p>
+        </div>
+      </header>
+
+      <div class="service-grid">
+        {
+          services.map((service, index) => (
+            <article class="service panel panel--soft" data-glare data-reveal style={`--reveal-delay: ${index * 70}ms`}>
+              <div class="service__main">
+                <p class="service__num mono">0{index + 1}</p>
+                <h3>{service.title}</h3>
+                <p>{service.description}</p>
+              </div>
+              <div class="service__side">
+                <div class="service__deliverables">
+                  <p class="service__label">Deliverables</p>
+                  <ul>
+                    {service.deliverables.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div class="service__proof">
+                  <p class="service__label">Recent work</p>
+                  <div class="service__proof-list">
+                    {service.proof.split(' · ').map((item) => (
+                      <span class="service__proof-item">{item}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="approach chapter" id="approach" aria-labelledby="approach-title">
+    <div class="shell">
+      <header class="section-head" data-reveal>
+        <div class="section-head__top">
+          <p class="eyebrow">Method</p>
+          <span class="section-head__rule" aria-hidden="true"></span>
+        </div>
+        <div class="section-head__row">
+          <h2 id="approach-title">How I work.</h2>
+          <p class="section-head__lede">
+            Three habits that keep the interface, the data and the deployment pointing in the same direction.
+          </p>
+        </div>
+      </header>
+
+      <ol class="principles">
+        {
+          workingPrinciples.map((principle, index) => (
+            <li class="panel panel--soft" data-glare data-reveal style={`--reveal-delay: ${index * 70}ms`}>
+              <p class="principles__num mono">0{index + 1}</p>
+              <h3>{principle.title}</h3>
+              <p>{principle.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="about chapter" id="about" aria-labelledby="about-title">
+    <div class="shell">
+      <header class="section-head" data-reveal>
+        <div class="section-head__top">
+          <p class="eyebrow">About</p>
+          <span class="section-head__rule" aria-hidden="true"></span>
+        </div>
+      </header>
+
+      <div class="about__grid">
+        <h2 id="about-title" class="about__statement" data-reveal data-parallax="0.02">
+          The screen is only the surface.
+        </h2>
+        <div class="about__copy panel panel--soft" data-glare data-reveal style="--reveal-delay: 80ms">
+          <p class="about__label">Profile</p>
+          <p class="about__lead">
+            I work at the seam between interface and infrastructure. React and Next.js on the surface; APIs, PostgreSQL and Linux deployments underneath.
+          </p>
+
+          <div class="about__notes">
+            <div class="about__note">
+              <p class="about__note-label">Working method</p>
+              <p>
+                That range changes how a product gets made: <strong>fewer hand-offs</strong>, clearer decisions about where logic belongs, and more attention to what happens after launch. I care about interfaces that stay usable when the data gets messy, schemas that make sense to the next developer, and <strong>deployments that are uneventful</strong>.
+              </p>
+            </div>
+
+            <div class="about__note">
+              <p class="about__note-label">Experience</p>
+              <p>
+                My work has moved across hospitality, a national patient-safety platform, and health-service reporting for facilities and IDP sites. Alongside client work, I lead technical communities and mentor developers on modern frontend architecture and Next.js.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="credentials chapter" id="credentials" aria-labelledby="credentials-title">
+    <div class="shell">
+      <header class="section-head" data-reveal>
+        <div class="section-head__top">
+          <p class="eyebrow">Track record</p>
+          <span class="section-head__rule" aria-hidden="true"></span>
+        </div>
+        <div class="section-head__row">
+          <h2 id="credentials-title">Leadership, study, recognition.</h2>
+          <p class="section-head__lede">
+            The work around the work: leading technical communities, teaching what I know, and testing ideas in public.
+          </p>
+        </div>
+      </header>
+
+      <div class="facts">
+        <section class="fact panel panel--soft" data-glare data-reveal aria-labelledby="leadership-title">
+          <div class="fact__head">
+            <h3 id="leadership-title">Leadership</h3>
+          </div>
+          <ol>
+            {
+              resume.leadership.map((item) => (
+                <li>
+                  <div class="fact__top">
+                    <h4>
+                      {item.role}
+                      <span>{item.organization}</span>
+                    </h4>
+                    <p class="mono">{item.dates}</p>
+                  </div>
+                  <p>{item.description}</p>
+                  {item.stack && <p class="fact__stack">{item.stack}</p>}
+                </li>
+              ))
+            }
+          </ol>
+        </section>
+
+        <section class="fact panel panel--soft" data-glare data-reveal style="--reveal-delay: 70ms" aria-labelledby="education-title">
+          <div class="fact__head">
+            <h3 id="education-title">Education</h3>
+          </div>
+          <h4 class="fact__degree">{resume.education.qualification}</h4>
+          <p>{resume.education.institution}</p>
+          <p class="mono fact__when">{resume.education.dates}</p>
+        </section>
+
+        <section class="fact panel panel--soft" data-glare data-reveal style="--reveal-delay: 120ms" aria-labelledby="recognition-title">
+          <div class="fact__head">
+            <h3 id="recognition-title">Recognition</h3>
+          </div>
+          <ol>
+            {
+              resume.recognitions.map((item) => (
+                <li>
+                  <h4>{item.name}</h4>
+                  {item.detail && <p>{item.detail}</p>}
+                  {
+                    item.certificate && (
+                      <a class="quiet-link fact__link" href={item.certificate} target="_blank" rel="noopener noreferrer">
+                        <span>Certificate</span>
+                        <Glyph />
+                        <span class="sr-only"> for {item.name} (opens in a new tab)</span>
+                      </a>
+                    )
+                  }
+                </li>
+              ))
+            }
+          </ol>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <section class="toolkit-screen chapter" id="toolkit" aria-labelledby="toolkit-title">
+    <div class="shell">
+      <header class="section-head" data-reveal>
+        <div class="section-head__top">
+          <p class="eyebrow">Specification</p>
+          <span class="section-head__rule" aria-hidden="true"></span>
+        </div>
+        <div class="section-head__row">
+          <h2 id="toolkit-title">Tools I reach for.</h2>
+          <p class="section-head__lede">
+            The languages, frameworks and infrastructure behind the work, from the interface layer down to the server.
+          </p>
+        </div>
+      </header>
+
+      <div class="toolkit panel panel--soft" data-glare data-reveal>
+        <dl>
+          {
+            resume.skillGroups.map((group) => (
+              <div>
+                <dt>{group.label}</dt>
+                <dd>{group.items.join(', ')}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <div class="toolkit__foot">
+          <p class="mono">Curriculum vitae / 2026</p>
+          <a class="quiet-link" href="/resume/">
+            <span>View the résumé</span>
+            <Glyph />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact chapter" id="contact" aria-labelledby="contact-title">
+    <div class="shell">
+      <header class="section-head" data-reveal>
+        <div class="section-head__top">
+          <p class="eyebrow">Contact</p>
+          <span class="section-head__rule" aria-hidden="true"></span>
+        </div>
+      </header>
+
+      <div class="contact__panel panel" data-glare data-reveal>
+        <div class="contact__intro">
+          <h2 id="contact-title" class="contact__title" data-parallax="0.028">
+            Have something worth building?
+          </h2>
+          <p class="contact__lede">
+            Tell me what you’re making, who it’s for, and what needs to work. A few sentences are enough to start.
+          </p>
+        </div>
+
+        <div class="contact__body">
+          <div class="contact__field">
+            <p class="contact__label">Email</p>
+            <EmailCopy />
+          </div>
+          <div class="contact__field">
+            <p class="contact__label">Elsewhere</p>
+            <div class="contact__links">
+              {
+                socials.map((social) => (
+                  <a class="chip" href={social.href} target="_blank" rel="noopener noreferrer">
+                    <span>{social.label}</span>
+                    <Glyph />
+                    <span class="sr-only"> (opens in a new tab)</span>
+                  </a>
+                ))
+              }
+              <a class="chip" href="/resume/">
+                <span>Résumé</span>
+                <Glyph />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Every chapter is its own screen. The fixed header floats above. */
+  .chapter {
+    position: relative;
+    display: flex;
+    min-height: 100svh;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: calc(var(--header-height) + clamp(10px, 1.6vh, 18px));
+    padding-bottom: clamp(20px, 3.2vh, 34px);
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  .hero.chapter {
+    min-height: 100svh;
+  }
+
+  /* Chapter rail */
+  .chapter-rail {
+    position: fixed;
+    top: 50%;
+    right: clamp(14px, 2vw, 28px);
+    z-index: 50;
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    padding: 7px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--surface) 82%, transparent);
+    box-shadow: var(--raise);
+    transform: translateY(-50%);
+    backdrop-filter: blur(12px);
+  }
+
+  .chapter-rail a {
+    position: relative;
+    display: grid;
+    width: 36px;
+    height: 36px;
+    place-items: center;
+    border-radius: 50%;
+    color: var(--quiet);
+    text-decoration: none;
+    transition:
+      box-shadow 240ms var(--ease),
+      color 180ms ease;
+  }
+
+  .chapter-rail a:hover,
+  .chapter-rail a:focus-visible {
+    color: var(--ink);
+  }
+
+  .chapter-rail a.is-active {
+    box-shadow: var(--sink-sm);
+    color: var(--accent);
+  }
+
+  .chapter-rail__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.45;
+    transition:
+      opacity 180ms ease,
+      transform 240ms var(--ease),
+      background-color 180ms ease,
+      box-shadow 240ms var(--ease);
+  }
+
+  .chapter-rail a:hover .chapter-rail__dot {
+    transform: scale(1.45);
+  }
+
+  .chapter-rail a.is-active .chapter-rail__dot {
+    background: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+    opacity: 1;
+    transform: scale(1.35);
+  }
+
+  .chapter-rail__label {
+    position: absolute;
+    right: calc(100% + 10px);
+    padding: 7px 10px;
+    border-radius: 8px;
+    background: var(--surface);
+    box-shadow: var(--raise-sm);
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(4px);
+    transition:
+      opacity 180ms ease,
+      transform 220ms var(--ease);
+    pointer-events: none;
+  }
+
+  .chapter-rail a:hover .chapter-rail__label,
+  .chapter-rail a:focus-visible .chapter-rail__label {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (min-width: 1440px) {
+    .chapter-rail {
+      display: flex;
+    }
+  }
+
+  @supports (animation-timeline: view()) {
+    @media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+      .chapter:not(.hero) > .shell {
+        animation: chapter-settle linear both;
+        animation-timeline: view();
+        animation-range: entry 0px entry 340px;
+      }
+    }
+  }
+
+  @keyframes chapter-settle {
+    from {
+      transform: translateY(64px) scale(0.98);
+    }
+    to {
+      transform: none;
+    }
+  }
+
+  /* ------------------------------
+     Hero
+     ------------------------------ */
+  .hero {
+    padding-top: calc(var(--header-height) + clamp(16px, 2.8vh, 32px));
+    padding-bottom: clamp(26px, 4.8vh, 54px);
+  }
+
+  .hero__panel {
+    padding: var(--pad-panel);
+    overflow: hidden;
+    animation: hero-in 780ms var(--ease-out) both;
+  }
+
+  @keyframes hero-in {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes hero-recede {
+    to {
+      transform: translateY(-60px) scale(0.95);
+    }
+  }
+
+  @supports (animation-timeline: scroll()) {
+    @media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+      .hero > .shell {
+        animation: hero-recede linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0px 900px;
+      }
+    }
+  }
+
+  @keyframes readout-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .hero__readout > div {
+    animation: readout-in 620ms var(--ease-out) both;
+  }
+
+  .hero__readout > div:nth-child(1) { animation-delay: 360ms; }
+  .hero__readout > div:nth-child(2) { animation-delay: 430ms; }
+  .hero__readout > div:nth-child(3) { animation-delay: 500ms; }
+  .hero__readout > div:nth-child(4) { animation-delay: 570ms; }
+
+  .hero__bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px 24px;
+    padding-bottom: clamp(18px, 2.4vw, 26px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .hero__status {
+    color: var(--ink-soft);
+  }
+
+  .hero__bar-mid,
+  .hero__bar-end {
+    color: var(--quiet);
+  }
+
+  .hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.28fr) minmax(280px, 0.72fr);
+    align-items: end;
+    gap: clamp(30px, 4.4vw, 72px);
+    padding-block: clamp(38px, 6vw, 78px);
+  }
+
+  .hero h1 {
+    font-size: clamp(3.5rem, 9.4vw, 7.4rem);
+    letter-spacing: -0.035em;
+  }
+
+  .hero__line {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.07em;
+    margin-bottom: -0.07em;
+  }
+
+  .hero__line > span {
+    display: inline-block;
+    animation: clip-up 900ms var(--ease-out) both;
+  }
+
+  .hero__line:nth-child(2) > span {
+    animation-delay: 90ms;
+  }
+
+  @keyframes clip-up {
+    from {
+      transform: translateY(110%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  .hero__aside {
+    max-width: 37ch;
+    padding-bottom: 0.4em;
+    animation: rise-in 760ms var(--ease-out) 220ms both;
+  }
+
+  .hero__lede {
+    color: var(--muted);
+    font-size: 1.05rem;
+    line-height: 1.62;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 22px;
+    margin-top: 28px;
+  }
+
+  .hero__readout {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    overflow: hidden;
+    border: 1px solid rgba(28, 27, 24, 0.05);
+    border-radius: 16px;
+    background: var(--line);
+    box-shadow: var(--sink-sm);
+  }
+
+  .hero__readout > div {
+    padding: 16px 18px;
+    background: var(--surface-low);
+  }
+
+  .hero__readout dt {
+    margin-bottom: 5px;
+    color: var(--quiet);
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .hero__readout dd {
+    color: var(--ink-soft);
+    font-size: 0.82rem;
+    font-weight: 500;
+    line-height: 1.35;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ------------------------------
+     Section headings
+     ------------------------------ */
+  .section-head {
+    margin-bottom: clamp(34px, 4.6vw, 54px);
+  }
+
+  .section-head__top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .section-head__top .eyebrow {
+    flex: none;
+    color: var(--ink-soft);
+  }
+
+  .section-head__rule {
+    width: 100%;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--surface-low);
+    box-shadow: inset 1px 1px 2px var(--shadow-dark-soft), inset -1px -1px 1px var(--shadow-light);
+    transform-origin: left center;
+  }
+
+  .section-head__row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(260px, 0.92fr);
+    align-items: end;
+    gap: 20px clamp(32px, 6vw, 88px);
+  }
+
+  .section-head__lede {
+    max-width: 46ch;
+    padding-bottom: 3px;
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  /* ------------------------------
+     Work
+     ------------------------------ */
+  .work-intro .section-head {
+    margin-bottom: clamp(28px, 4.5vh, 46px);
+  }
+
+  .work-index {
+    display: grid;
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .work-index li {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .work-index a {
+    display: grid;
+    grid-template-columns: 58px minmax(0, 1fr) auto 46px;
+    align-items: center;
+    gap: clamp(16px, 2.4vw, 32px);
+    padding-block: clamp(15px, 2.4vh, 25px);
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .work-index__num {
+    color: var(--accent);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+  }
+
+  .work-index__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3.1vw, 2.55rem);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    transition:
+      color 220ms ease,
+      transform 320ms var(--ease);
+  }
+
+  .work-index__meta {
+    color: var(--quiet);
+    font-size: 0.8rem;
+    line-height: 1.4;
+    text-align: right;
+  }
+
+  .work-index__go {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    border-radius: 50%;
+    box-shadow: var(--sink-sm);
+    color: var(--accent);
+    transition:
+      background-color 240ms var(--ease),
+      box-shadow 240ms var(--ease),
+      color 240ms var(--ease);
+  }
+
+  .work-index a:hover .work-index__title,
+  .work-index a:focus-visible .work-index__title {
+    color: var(--accent-deep);
+    transform: translateX(4px);
+  }
+
+  .work-index a:hover .work-index__go,
+  .work-index a:focus-visible .work-index__go {
+    background: var(--accent);
+    box-shadow: 2px 2px 6px rgba(133, 52, 29, 0.32);
+    color: var(--on-accent);
+  }
+
+  .work-intro__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px 24px;
+    margin-top: clamp(20px, 3vh, 32px);
+    color: var(--quiet);
+  }
+
+  .work-intro__foot .mono {
+    color: var(--quiet);
+    font-size: 0.62rem;
+  }
+
+  .project > .shell {
+    width: min(100%, 1340px);
+    padding-inline: clamp(24px, 3vw, 40px);
+  }
+
+  .project__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: clamp(10px, 1.6vh, 16px);
+    padding-inline: 4px;
+  }
+
+  .project__meta .eyebrow {
+    color: var(--ink-soft);
+  }
+
+  .project__meta .mono {
+    color: var(--quiet);
+    font-size: 0.62rem;
+  }
+
+  .piece {
+    padding: clamp(24px, 3.8vh, 40px);
+  }
+
+  .piece__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.14fr) minmax(0, 0.86fr);
+    align-items: stretch;
+    gap: clamp(24px, 3.6vh, 40px);
+  }
+
+  .piece__visual {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .piece__spec {
+    display: flex;
+    width: 100%;
+    flex: 1;
+    flex-direction: column;
+    border-top: 1px solid var(--line);
+  }
+
+  .piece__spec > div {
+    display: grid;
+    flex: 1;
+    grid-template-columns: 68px minmax(0, 1fr);
+    align-items: center;
+    gap: 16px;
+    padding-block: clamp(9px, 1.4vh, 14px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .piece__spec dt {
+    padding-top: 2px;
+    color: var(--quiet);
+    font-family: var(--font-mono);
+    font-size: 0.63rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .piece__spec dd {
+    color: var(--ink);
+    font-size: 0.88rem;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+
+  .piece__content > .chip {
+    align-self: flex-start;
+    min-height: 48px;
+    margin-top: auto;
+  }
+
+  .piece__content {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(16px, 2.4vh, 24px);
+  }
+
+  .piece__head {
+    margin-top: 0;
+  }
+
+  .piece__kicker {
+    color: var(--quiet);
+    line-height: 1.3;
+  }
+
+  .piece__title {
+    max-width: 18ch;
+    min-width: 0;
+    margin-top: 7px;
+    font-size: clamp(1.9rem, 2.9vw, 2.55rem);
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+  }
+
+  .piece__fullname {
+    max-width: none;
+    margin-top: 7px;
+    color: var(--quiet);
+    font-size: 0.86rem;
+    line-height: 1.4;
+  }
+
+  .still {
+    width: 100%;
+    margin-top: 0;
+  }
+
+  .still__link {
+    position: relative;
+    display: block;
+    padding: clamp(8px, 1.2vw, 12px);
+    border: 1px solid rgba(28, 27, 24, 0.055);
+    border-radius: 20px;
+    background: var(--surface-low);
+    box-shadow: var(--sink);
+  }
+
+  .still__window {
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 1.95 / 1;
+    border-radius: 11px;
+    background: var(--surface-deep);
+    box-shadow: 0 0 0 1px rgba(28, 27, 24, 0.06);
+  }
+
+  .still__window :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: translate3d(var(--img-x, 0px), var(--img-y, 0px), 0) scale(var(--img-scale, 1.045));
+    transform-origin: center;
+  }
+
+  .js .still__window :global(img) {
+    will-change: transform;
+  }
+
+  .still__link:focus-visible .still__window :global(img) {
+    --img-scale: 1.075;
+  }
+
+  .still__cue {
+    position: absolute;
+    right: 26px;
+    bottom: 26px;
+    z-index: 4;
+    display: inline-flex;
+    min-height: 42px;
+    align-items: center;
+    gap: 9px;
+    padding: 0 15px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--night) 88%, transparent);
+    color: var(--on-dark);
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity 260ms var(--ease),
+      transform 260ms var(--ease);
+    backdrop-filter: blur(8px);
+  }
+
+  .still__link:hover .still__cue,
+  .still__link:focus-visible .still__cue {
+    opacity: 1;
+    transform: none;
+  }
+
+  .still figcaption {
+    max-width: 74ch;
+    margin-top: 8px;
+    padding-inline: 4px;
+    color: var(--quiet);
+    font-size: 0.76rem;
+    line-height: 1.5;
+  }
+
+  .piece__summary,
+  .piece__contribution,
+  .piece__scope {
+    max-width: 46ch;
+    font-size: clamp(0.92rem, 0.95vw, 0.98rem);
+    line-height: 1.56;
+  }
+
+  .piece__summary {
+    color: var(--ink);
+  }
+
+  .piece__contribution,
+  .piece__scope {
+    color: var(--ink-soft);
+  }
+
+  .piece__label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    color: var(--quiet);
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .piece__label::before {
+    width: 14px;
+    height: 2px;
+    flex: none;
+    border-radius: 1px;
+    background: var(--accent);
+    content: '';
+  }
+
+  .piece__block--brief,
+  .piece__block--scope {
+    padding: clamp(15px, 2.2vh, 22px);
+    border-radius: 16px;
+    background: var(--surface-low);
+    box-shadow: var(--sink-sm);
+  }
+
+  .piece__block--part {
+    padding: clamp(15px, 2.2vh, 22px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 16px;
+    background: var(--surface);
+    box-shadow: var(--raise-sm);
+  }
+
+  .piece__block--part .piece__label {
+    color: var(--accent-deep);
+  }
+
+  .piece__note {
+    max-width: 48ch;
+    padding-left: 12px;
+    border-left: 2px solid var(--accent);
+    color: var(--quiet);
+    font-size: 0.9rem;
+    line-height: 1.56;
+  }
+
+  /* Other work */
+  .more__head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 0.82fr);
+    align-items: end;
+    gap: 16px 48px;
+    margin-bottom: clamp(26px, 4vh, 40px);
+  }
+
+  .more__head .eyebrow {
+    margin-bottom: 10px;
+  }
+
+  .more__head h2 {
+    font-size: clamp(1.7rem, 3vw, 2.4rem);
+  }
+
+  .more__head > p {
+    max-width: 44ch;
+    padding-bottom: 4px;
+    color: var(--muted);
+    font-size: 0.96rem;
+  }
+
+  .more__list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--gap-card);
+  }
+
+  .more__item {
+    transition:
+      box-shadow 300ms var(--ease),
+      transform 300ms var(--ease);
+  }
+
+  .more__item:hover {
+    box-shadow: var(--raise-lg);
+    transform: translateY(-2px);
+  }
+
+  .more__item a {
+    display: flex;
+    min-height: clamp(250px, 34vh, 340px);
+    flex-direction: column;
+    padding: var(--pad-card);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .more__item a:active {
+    transform: translateY(1px);
+  }
+
+  .more__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+    color: var(--quiet);
+    font-size: 0.72rem;
+  }
+
+  .more__item h3 {
+    margin-top: 20px;
+    font-size: clamp(1.15rem, 1.6vw, 1.4rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  .more__desc {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 0.92rem;
+    line-height: 1.62;
+  }
+
+  .more__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: 14px 20px;
+    margin-top: auto;
+    padding-top: 24px;
+  }
+
+  .more__stack {
+    max-width: 28ch;
+    color: var(--quiet);
+    font-size: 0.76rem;
+    line-height: 1.45;
+  }
+
+  .more__go {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--ink);
+    font-size: 0.84rem;
+    font-weight: 600;
+  }
+
+  .more__item a:hover .more__go,
+  .more__item a:focus-visible .more__go {
+    color: var(--accent-deep);
+  }
+
+  /* ------------------------------
+     Services
+     ------------------------------ */
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+    gap: var(--gap-card);
+  }
+
+  .service {
+    display: flex;
+    flex-direction: column;
+    padding: var(--pad-card);
+  }
+
+  .service__main {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .service__num {
+    margin-bottom: 16px;
+    color: var(--accent);
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+  }
+
+  .service h3 {
+    max-width: 23ch;
+    font-size: clamp(1.25rem, 1.8vw, 1.55rem);
+    line-height: 1.16;
+  }
+
+  .service__main > p:last-child {
+    max-width: 55ch;
+    margin-top: 12px;
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  .service__label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    color: var(--quiet);
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .service__label::before {
+    width: 12px;
+    height: 2px;
+    flex: none;
+    border-radius: 1px;
+    background: var(--accent);
+    content: '';
+  }
+
+  .service__side {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: auto;
+    padding-top: clamp(20px, 3vh, 30px);
+  }
+
+  .service__deliverables ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  .service__deliverables li {
+    display: inline-flex;
+    max-width: 100%;
+    min-height: 32px;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 10px;
+    border-radius: 999px;
+    background: var(--surface-low);
+    box-shadow: var(--sink-sm);
+    color: var(--ink-soft);
+    font-size: 0.78rem;
+    line-height: 1.25;
+  }
+
+  .service__deliverables li::before {
+    width: 5px;
+    height: 5px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 13%, transparent);
+    content: '';
+  }
+
+  .service__proof {
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+
+  .service__proof .service__label {
+    margin-bottom: 8px;
+  }
+
+  .service__proof-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+  }
+
+  .service__proof-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--quiet);
+    font-size: 0.76rem;
+    font-weight: 500;
+    line-height: 1.35;
+  }
+
+  .service__proof-item::before {
+    width: 4px;
+    height: 4px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--accent);
+    content: '';
+  }
+
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--gap-card);
+  }
+
+  .principles li {
+    display: flex;
+    min-height: clamp(250px, 34vh, 330px);
+    flex-direction: column;
+    padding: clamp(22px, 2.4vw, 32px);
+  }
+
+  .principles__num {
+    margin-bottom: auto;
+    color: var(--accent);
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+  }
+
+  .principles h3 {
+    margin-top: 36px;
+    font-size: clamp(1.2rem, 1.7vw, 1.45rem);
+    font-weight: 500;
+  }
+
+  .principles li > p:last-child {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  /* ------------------------------
+     About
+     ------------------------------ */
+  .about__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(300px, 1fr);
+    align-items: start;
+    gap: clamp(28px, 6vw, 88px);
+  }
+
+  .about__statement {
+    max-width: 13ch;
+    font-size: clamp(2.5rem, 5vw, 4.2rem);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+
+  .about__copy {
+    max-width: none;
+    padding: var(--pad-panel);
+  }
+
+  .about__label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 18px;
+    color: var(--quiet);
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .about__label::before {
+    width: 14px;
+    height: 2px;
+    flex: none;
+    border-radius: 1px;
+    background: var(--accent);
+    content: '';
+  }
+
+  .about__lead {
+    color: var(--ink);
+    font-size: clamp(1.08rem, 1.45vw, 1.22rem);
+    line-height: 1.58;
+  }
+
+  .about__notes {
+    display: grid;
+    gap: 22px;
+    margin-top: 26px;
+  }
+
+  .about__note {
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+
+  .about__note-label {
+    margin-bottom: 8px;
+    color: var(--quiet);
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .about__note p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.64;
+  }
+
+  .about__note strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: 1.2fr 0.85fr 0.95fr;
+    gap: var(--gap-card);
+  }
+
+  .fact {
+    padding: var(--pad-card);
+  }
+
+  .fact__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 16px;
+    margin-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .fact__head h3 {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--quiet);
+  }
+
+  .fact li + li {
+    margin-top: 22px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+  }
+
+  .fact__top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 4px 14px;
+  }
+
+  .fact h4 {
+    font-size: 0.96rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .fact h4 span {
+    display: block;
+    margin-top: 2px;
+    color: var(--muted);
+    font-size: 0.84rem;
+    font-weight: 400;
+  }
+
+  .fact__top .mono {
+    flex: none;
+    padding-top: 2px;
+    color: var(--quiet);
+    font-size: 0.6rem;
+  }
+
+  .fact li > p,
+  .fact > p,
+  .fact__stack {
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+
+  .fact__stack {
+    color: var(--quiet);
+    font-size: 0.78rem;
+  }
+
+  .fact__when {
+    margin-top: 12px;
+    color: var(--quiet);
+    font-size: 0.62rem;
+  }
+
+  .fact__degree {
+    margin-top: 8px;
+    font-size: clamp(1.3rem, 1.8vw, 1.55rem);
+    font-weight: 600;
+    line-height: 1.16;
+  }
+
+  .fact > p:not(.mono):last-child {
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 0.88rem;
+  }
+
+  .fact__link {
+    min-height: 34px;
+    margin-top: 6px;
+    font-size: 0.82rem;
+  }
+
+  .toolkit {
+    padding: var(--pad-panel);
+  }
+
+  .toolkit dl {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 clamp(28px, 4vw, 56px);
+  }
+
+  .toolkit dl > div {
+    padding-block: clamp(18px, 2.4vh, 26px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .toolkit dl > div:nth-last-child(-n + 2) {
+    border-bottom: 0;
+  }
+
+  .toolkit dt {
+    margin-bottom: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .toolkit dd {
+    color: var(--muted);
+    font-size: 0.92rem;
+    line-height: 1.58;
+  }
+
+  .toolkit__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 24px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+  }
+
+  .toolkit__foot .mono {
+    color: var(--quiet);
+    font-size: 0.6rem;
+  }
+
+  /* ------------------------------
+     Contact
+     ------------------------------ */
+  .contact {
+    padding-bottom: clamp(20px, 3.2vh, 34px);
+  }
+
+  .contact__panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
+    gap: clamp(34px, 5vw, 72px);
+    padding: var(--pad-panel);
+    overflow: hidden;
+  }
+
+  .contact__title {
+    max-width: 14ch;
+    font-size: clamp(2.4rem, 5vw, 4.1rem);
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+
+  .contact__lede {
+    max-width: 42ch;
+    margin-top: 20px;
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .contact__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+  }
+
+  .contact__label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    color: var(--quiet);
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .contact__label::before {
+    width: 12px;
+    height: 2px;
+    flex: none;
+    border-radius: 1px;
+    background: var(--accent);
+    content: '';
+  }
+
+  .contact__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  /* Shorter screens get the same composition, tightened to fit. */
+  @media (min-width: 1100px) and (max-height: 980px) {
+    .chapter {
+      padding-top: calc(var(--header-height) + 6px);
+      padding-bottom: 16px;
+    }
+
+    .hero {
+      padding-top: calc(var(--header-height) + 12px);
+      padding-bottom: 20px;
+    }
+
+    .section-head {
+      margin-bottom: clamp(18px, 3vh, 30px);
+    }
+
+    .project__meta {
+      margin-bottom: 6px;
+    }
+
+    .piece {
+      padding: 24px clamp(20px, 2.2vw, 30px);
+    }
+
+    .piece__grid {
+      gap: 24px;
+    }
+
+    .piece__content {
+      gap: 14px;
+    }
+
+    .piece__title {
+      margin-top: 6px;
+      font-size: clamp(1.7rem, 2.8vw, 2.4rem);
+    }
+
+    .piece__fullname {
+      margin-top: 5px;
+      font-size: 0.84rem;
+    }
+
+    .piece__block--brief,
+    .piece__block--part,
+    .piece__block--scope {
+      padding: 14px 16px;
+    }
+
+    .piece__summary,
+    .piece__contribution,
+    .piece__scope {
+      font-size: 0.9rem;
+      line-height: 1.52;
+    }
+
+    .piece__label {
+      margin-bottom: 8px;
+      font-size: 0.62rem;
+    }
+
+    .piece__note {
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
+
+    .piece__spec > div {
+      padding-block: 8px;
+      gap: 14px;
+    }
+
+    .piece__spec dt {
+      font-size: 0.6rem;
+    }
+
+    .piece__spec dd {
+      font-size: 0.82rem;
+    }
+
+    .still__link {
+      padding: 8px;
+    }
+
+    .still figcaption {
+      margin-top: 8px;
+      font-size: 0.72rem;
+    }
+
+    .piece__content > .chip {
+      min-height: 44px;
+      padding-left: 20px;
+      font-size: 0.9rem;
+    }
+
+    .service {
+      padding: clamp(16px, 1.8vw, 24px);
+    }
+
+    .service__num {
+      margin-bottom: 10px;
+    }
+
+    .service h3 {
+      font-size: clamp(1.15rem, 1.5vw, 1.35rem);
+    }
+
+    .service__main > p:last-child {
+      font-size: 0.86rem;
+      line-height: 1.52;
+    }
+
+    .service__side {
+      gap: 12px;
+      padding-top: 14px;
+    }
+
+    .service__deliverables li {
+      min-height: 28px;
+      padding: 6px 9px;
+      font-size: 0.74rem;
+    }
+
+    .service__proof {
+      padding-top: 10px;
+    }
+
+    .service__proof-item {
+      font-size: 0.72rem;
+    }
+
+    .principles li {
+      min-height: clamp(220px, 30vh, 300px);
+      padding: clamp(18px, 2vw, 26px);
+    }
+
+    .more__item a {
+      min-height: clamp(230px, 31vh, 300px);
+    }
+
+    .about__statement {
+      font-size: clamp(2.4rem, 4.4vw, 3.6rem);
+    }
+
+    .about__copy {
+      padding: clamp(20px, 2.4vw, 30px);
+    }
+
+    .facts {
+      gap: 16px;
+    }
+
+    .fact {
+      padding: clamp(16px, 1.8vw, 22px);
+    }
+
+    .toolkit {
+      padding: clamp(20px, 2.4vw, 30px);
+    }
+  }
+
+  /* A little more air on mid-height laptop screens. */
+  @media (min-width: 1280px) and (min-height: 840px) and (max-height: 980px) {
+    .piece {
+      padding: 28px clamp(22px, 2.3vw, 32px);
+    }
+
+    .piece__grid {
+      gap: 26px;
+    }
+
+    .piece__content {
+      gap: 16px;
+    }
+
+    .piece__title {
+      font-size: clamp(1.75rem, 2.9vw, 2.45rem);
+    }
+
+    .piece__block--brief,
+    .piece__block--part,
+    .piece__block--scope {
+      padding: 16px 18px;
+    }
+
+    .piece__spec > div {
+      padding-block: 10px;
+    }
+  }
+
+  /* Laptop-height screens: keep the project card in one frame. */
+  @media (min-width: 1280px) and (max-height: 790px) {
+    .chapter {
+      padding-top: calc(var(--header-height) + 4px);
+      padding-bottom: 12px;
+    }
+
+    .project__meta {
+      margin-bottom: 4px;
+    }
+
+    .piece {
+      padding: 24px clamp(20px, 2.1vw, 28px);
+    }
+
+    .piece__grid {
+      gap: 22px;
+    }
+
+    .piece__content {
+      gap: 12px;
+    }
+
+    .piece__title {
+      font-size: clamp(1.65rem, 2.7vw, 2.2rem);
+    }
+
+    .piece__block--brief,
+    .piece__block--part,
+    .piece__block--scope {
+      padding: 13px 15px;
+    }
+
+    .piece__summary,
+    .piece__contribution,
+    .piece__scope {
+      font-size: 0.88rem;
+      line-height: 1.48;
+    }
+
+    .piece__spec > div {
+      padding-block: 8px;
+    }
+
+    .still figcaption {
+      display: none;
+    }
+  }
+
+  /* ------------------------------
+     Responsive
+     ------------------------------ */
+  @media (max-width: 1100px) {
+    .service-grid,
+    .principles {
+      grid-template-columns: 1fr;
+    }
+
+    .more__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 980px) {
+    .hero__grid,
+    .section-head__row,
+    .more__head,
+    .about__grid,
+    .contact__panel {
+      grid-template-columns: 1fr;
+    }
+
+    .hero__readout {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .piece__grid {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .piece__content {
+      display: contents;
+    }
+
+    .piece__head {
+      order: 1;
+    }
+
+    .piece__visual {
+      order: 2;
+    }
+
+    .piece__block,
+    .piece__note,
+    .piece__content > .chip {
+      order: 3;
+    }
+
+    .piece__content > .chip {
+      margin-top: 0;
+    }
+
+    .still__window {
+      aspect-ratio: 1.6 / 1;
+    }
+
+    .work-index a {
+      grid-template-columns: 46px minmax(0, 1fr) 42px;
+    }
+
+    .work-index__meta {
+      display: none;
+    }
+
+    .facts {
+      grid-template-columns: 1fr;
+    }
+
+    .contact__body {
+      max-width: 560px;
+      margin-top: 8px;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .more__list {
+      grid-template-columns: 1fr;
+    }
+
+    .work-index a {
+      grid-template-columns: 36px minmax(0, 1fr) 40px;
+      gap: 12px;
+    }
+
+    .work-index__title {
+      font-size: clamp(1.35rem, 6.4vw, 2rem);
+    }
+
+    .work-index__go {
+      width: 38px;
+      height: 38px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .hero__panel {
+      padding: var(--pad-panel);
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 15.4vw, 4.4rem);
+    }
+
+    .hero__bar-mid {
+      display: none;
+    }
+
+    .hero__grid {
+      padding-block: 34px 38px;
+    }
+
+    .hero__actions {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .hero__readout {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .hero__readout > div {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      border-top: 1px solid var(--line);
+    }
+
+    .hero__readout > div:first-child {
+      border-top: 0;
+    }
+
+    .hero__readout dt {
+      margin-bottom: 0;
+    }
+
+    .piece {
+      padding: var(--pad-panel);
+    }
+
+    .piece__title {
+      font-size: clamp(1.9rem, 9vw, 2.6rem);
+    }
+
+    .still__link {
+      padding: 8px;
+      border-radius: 16px;
+    }
+
+    .still__cue {
+      right: 18px;
+      bottom: 18px;
+    }
+
+    .principles li {
+      min-height: 0;
+      padding: var(--pad-card);
+    }
+
+    .about__statement {
+      font-size: clamp(2.2rem, 10vw, 3rem);
+    }
+
+    .fact {
+      padding: var(--pad-card);
+    }
+
+    .toolkit {
+      padding: var(--pad-panel);
+    }
+
+    .toolkit dl {
+      grid-template-columns: 1fr;
+    }
+
+    .contact__panel {
+      padding: var(--pad-panel);
+    }
+
+    .contact__title {
+      font-size: clamp(2.3rem, 11vw, 3.2rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__panel,
+    .hero__aside,
+    .hero__line > span,
+    .hero__readout > div,
+    .hero > .shell {
+      animation: none;
+    }
+
+    .still__window :global(img) {
+      transform: none;
+    }
+
+    .still__link:hover .still__window :global(img),
+    .still__link:focus-visible .still__window :global(img) {
+      transform: none;
+    }
+
+    [data-glare]::after {
+      display: none;
+    }
+  }
+</style>

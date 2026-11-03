@@ -1,0 +1,885 @@
+/* =========================================================
+   Kalkidan Yishak Zerihun portfolio
+   Less, but better: one surface, one ink, one accent.
+   Depth is used only to signal interaction.
+   ========================================================= */
+
+@font-face {
+  font-family: 'Fraunces';
+  src: url('/fonts/fraunces-latin.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Instrument Sans';
+  src: url('/fonts/instrument-sans-latin.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Spline Sans Mono';
+  src: url('/fonts/spline-sans-mono-latin.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+
+  /* One warm material, lit from the top-left. */
+  --page: #dedbd4;
+  --page-deep: #d2cdc3;
+  --surface: #eae8e3;
+  --surface-low: #e0ddd6;
+  --surface-deep: #d4d0c7;
+
+  /* The page is a drawn surface: drafting grid, contour field
+     and a soft sheet light. Kept low-contrast so copy stays king. */
+  --pattern-ink: rgba(52, 45, 35, 0.055);
+  --pattern-ink-soft: rgba(52, 45, 35, 0.028);
+  --pattern-grid: 112px;
+  --pattern-dots: 28px;
+
+  --ink: #151411;
+  --ink-soft: #211f1b;
+  --muted: #37332d;
+  --quiet: #3f3b34;
+
+  --accent: #96381f;
+  --accent-deep: #6f2815;
+  --accent-soft: #d9a68f;
+  --on-accent: #fbf8f2;
+
+  --night: #211f1b;
+  --night-high: #2a2823;
+  --on-dark: #ece8df;
+  --on-dark-muted: #b5afa3;
+
+  --line: rgba(28, 27, 24, 0.17);
+  --line-strong: rgba(28, 27, 24, 0.34);
+  --line-dark: rgba(236, 232, 223, 0.14);
+  --line-dark-strong: rgba(236, 232, 223, 0.28);
+
+  /* The neumorphic pair: a shadow and a highlight. */
+  --shadow-dark: rgba(128, 120, 108, 0.62);
+  --shadow-dark-soft: rgba(128, 120, 108, 0.48);
+  --shadow-light: rgba(255, 255, 255, 0.98);
+  --shadow-light-soft: rgba(255, 255, 255, 0.78);
+
+  --raise-sm: 3px 3px 7px var(--shadow-dark-soft), -3px -3px 7px var(--shadow-light);
+  --raise: 6px 6px 15px var(--shadow-dark-soft), -5px -5px 14px var(--shadow-light);
+  --raise-lg: 11px 11px 28px var(--shadow-dark), -8px -8px 22px var(--shadow-light);
+  --sink-sm: inset 2px 2px 5px var(--shadow-dark-soft), inset -2px -2px 5px var(--shadow-light);
+  --sink: inset 4px 4px 10px var(--shadow-dark-soft), inset -3px -3px 8px var(--shadow-light);
+  --sink-lg: inset 7px 7px 16px var(--shadow-dark), inset -5px -5px 12px var(--shadow-light-soft);
+
+  --font-sans: 'Instrument Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-display: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  --font-mono: 'Spline Sans Mono', ui-monospace, 'SFMono-Regular', Consolas, monospace;
+
+  --shell: 1180px;
+  --gutter: clamp(20px, 4.6vw, 64px);
+  --section-space: clamp(84px, 11vh, 132px);
+  --header-height: 78px;
+  --scroll-offset: 0px;
+
+  /* One spacing scale for every surface and card. */
+  --pad-panel: clamp(20px, 3vw, 36px);
+  --pad-card: clamp(18px, 2.4vw, 28px);
+  --pad-inner: clamp(16px, 2vw, 22px);
+  --gap-card: clamp(16px, 2.2vw, 24px);
+  --gap-panel: clamp(24px, 3.2vw, 40px);
+
+  --radius-card: 24px;
+
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--page);
+  color: var(--ink);
+  scroll-padding-top: var(--scroll-offset);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+/* Chapters are screens, not a continuous scroll. */
+@media (min-width: 1280px) and (min-height: 760px) and (prefers-reduced-motion: no-preference) {
+  html.snap-page {
+    scroll-snap-type: y mandatory;
+  }
+}
+
+body {
+  min-height: 100dvh;
+  margin: 0;
+  overflow-x: clip;
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  font-weight: 400;
+  line-height: 1.62;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* The drawn ground: a warm sheet, a surveyor's grid and two
+   pools of light. Fixed so every full-screen chapter is lit alike. */
+.surface-atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-color: var(--page);
+  background-image:
+    /* A fine dot lattice, like a surveyor's field sheet. */
+    radial-gradient(circle at center, var(--pattern-ink) 0.9px, transparent 1.3px),
+    /* Two quiet rules form the larger drafting grid. */
+    repeating-linear-gradient(90deg, var(--pattern-ink-soft) 0 1px, transparent 1px var(--pattern-grid)),
+    repeating-linear-gradient(0deg, var(--pattern-ink-soft) 0 1px, transparent 1px var(--pattern-grid)),
+    /* A diagonal wash of light across the sheet. */
+    linear-gradient(
+      118deg,
+      transparent 18%,
+      rgba(255, 253, 247, 0.34) 43%,
+      transparent 62%
+    ),
+    /* Warm falloff into the lower-right corner. */
+    radial-gradient(
+      ellipse 90% 72% at 104% 106%,
+      rgba(65, 54, 41, 0.24) 0%,
+      rgba(65, 54, 41, 0.09) 42%,
+      transparent 70%
+    ),
+    /* Light gathering at the top-left of the material. */
+    radial-gradient(
+      ellipse 110% 78% at 6% -14%,
+      rgba(255, 253, 247, 0.96) 0%,
+      rgba(255, 253, 247, 0.4) 36%,
+      transparent 68%
+    ),
+    /* The ground itself, never one flat note. */
+    linear-gradient(155deg, #e8e4dc 0%, #e1ddd5 32%, #d8d3ca 68%, var(--page-deep) 100%);
+  background-position: center;
+  background-size:
+    var(--pattern-dots) var(--pattern-dots),
+    auto,
+    auto,
+    cover,
+    cover,
+    cover,
+    cover;
+  pointer-events: none;
+}
+
+body,
+button,
+input,
+textarea,
+select {
+  font-family: var(--font-sans);
+}
+
+/* Generated material layers: one grain, one contour field. */
+.surface-grain,
+.surface-contours {
+  position: fixed;
+  inset: -10% 0;
+  z-index: 0;
+  height: 120%;
+  background-position: center;
+  background-size: cover;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.surface-grain {
+  background-image: url('/images/bg-texture.webp');
+  opacity: 0.46;
+  mix-blend-mode: soft-light;
+}
+
+.surface-contours {
+  background-image: url('/images/bg-contours.webp');
+  opacity: 0.43;
+  mix-blend-mode: multiply;
+}
+
+main,
+.site-header,
+.site-footer {
+  position: relative;
+  z-index: 1;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd,
+dt {
+  margin: 0;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-size: clamp(3.1rem, 7.6vw, 6.1rem);
+  font-weight: 500;
+  line-height: 0.94;
+  letter-spacing: -0.035em;
+  font-optical-sizing: auto;
+}
+
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.06;
+  font-optical-sizing: auto;
+}
+
+h4 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: clamp(2rem, 3.8vw, 3.05rem);
+}
+
+h3 {
+  font-size: clamp(1.3rem, 2vw, 1.65rem);
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+button {
+  color: inherit;
+  font: inherit;
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+:where(a, button, summary, input, textarea, select):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.shell {
+  width: min(100%, calc(var(--shell) + (var(--gutter) * 2)));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 200;
+  transform: translateY(calc(-100% - 24px));
+  padding: 12px 18px;
+  border-radius: 10px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 180ms var(--ease);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+  outline-color: var(--ink);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.eyebrow {
+  color: var(--quiet);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.section {
+  padding-block: var(--section-space);
+}
+
+.serif {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  font-optical-sizing: auto;
+}
+
+/* ------------------------------
+   Material primitives
+   ------------------------------ */
+.panel {
+  border: 1px solid rgba(255, 255, 255, 0.52);
+  border-radius: var(--radius-card);
+  background-color: var(--surface);
+  background-image: url('/images/bg-texture.webp');
+  background-position: center;
+  background-size: cover;
+  background-blend-mode: soft-light;
+  box-shadow: var(--raise-lg);
+}
+
+.panel--soft {
+  box-shadow: var(--raise);
+}
+
+.well {
+  border: 1px solid rgba(28, 27, 24, 0.05);
+  border-radius: 16px;
+  background-color: var(--surface-low);
+  background-image: url('/images/bg-texture.webp');
+  background-position: center;
+  background-size: cover;
+  background-blend-mode: soft-light;
+  box-shadow: var(--sink);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+/* A restrained moving highlight across interactive surfaces. */
+[data-glare] {
+  position: relative;
+}
+
+[data-glare]::after {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  background: radial-gradient(
+    340px circle at var(--glare-x, 50%) var(--glare-y, 0%),
+    rgba(255, 255, 255, 0.36),
+    transparent 68%
+  );
+  content: '';
+  opacity: var(--glare-opacity, 0);
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+  transition: opacity 500ms var(--ease);
+}
+
+
+.status::before {
+  width: 7px;
+  height: 7px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+  content: '';
+}
+
+/* Scroll progress: a machined groove with an accent fill. */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 80;
+  width: 100%;
+  height: 3px;
+  background: var(--surface-deep);
+  box-shadow: inset 0 1px 2px var(--shadow-dark-soft), inset 0 -1px 0 var(--shadow-light);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+
+.scroll-progress::after {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--accent);
+  content: '';
+}
+
+/* ------------------------------
+   Links and controls
+   ------------------------------ */
+.glyph {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  overflow: visible;
+}
+
+.glyph__line,
+.glyph__head {
+  transition: transform 300ms var(--ease);
+}
+
+.glyph[data-dir='down'] {
+  transform: none;
+}
+
+:where(a, button):hover .glyph,
+:where(a, button):focus-visible .glyph {
+  transform: translate(1px, -1px);
+}
+
+:where(a, button):hover .glyph[data-dir='down'],
+:where(a, button):focus-visible .glyph[data-dir='down'] {
+  transform: translateY(2px);
+}
+
+.action,
+.button {
+  display: inline-flex;
+  min-height: 50px;
+  align-items: center;
+  gap: 14px;
+  padding: 6px 6px 6px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: var(--raise);
+  color: var(--ink);
+  font-size: 0.94rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  transition:
+    box-shadow 280ms var(--ease),
+    transform 280ms var(--ease),
+    color 200ms ease;
+}
+
+.action:hover,
+.action:focus-visible,
+.button:hover,
+.button:focus-visible {
+  box-shadow: var(--raise-lg);
+  color: var(--accent-deep);
+  transform: translateY(-1px);
+}
+
+.action:active,
+.button:active {
+  box-shadow: var(--sink);
+  transform: translateY(0);
+}
+
+.action__ring {
+  display: grid;
+  width: 37px;
+  height: 37px;
+  flex: none;
+  place-items: center;
+  border-radius: 50%;
+  box-shadow: var(--sink-sm);
+  color: var(--accent);
+  transition:
+    background-color 240ms var(--ease),
+    box-shadow 240ms var(--ease),
+    color 240ms var(--ease);
+}
+
+.action:hover .action__ring,
+.action:focus-visible .action__ring,
+.button:hover .action__ring,
+.button:focus-visible .action__ring {
+  background: var(--accent);
+  box-shadow: 2px 2px 6px rgba(133, 52, 29, 0.32);
+  color: var(--on-accent);
+}
+
+.action:active .action__ring,
+.button:active .action__ring {
+  box-shadow: var(--sink-sm);
+}
+
+.quiet-link,
+.text-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0 2px;
+  transition:
+    background-size 320ms var(--ease),
+    color 200ms ease;
+}
+
+.quiet-link:hover,
+.quiet-link:focus-visible,
+.text-link:hover,
+.text-link:focus-visible {
+  color: var(--accent-deep);
+  background-size: 100% 2px;
+}
+
+.quiet-link .glyph,
+.text-link .glyph {
+  color: var(--accent);
+}
+
+.chip {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: var(--raise-sm);
+  color: var(--ink-soft);
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  transition:
+    box-shadow 260ms var(--ease),
+    color 200ms ease,
+    transform 260ms var(--ease);
+}
+
+.chip:hover,
+.chip:focus-visible {
+  box-shadow: var(--sink-sm);
+  color: var(--accent-deep);
+  transform: translateY(-1px);
+}
+
+.chip:active {
+  box-shadow: var(--sink);
+  transform: translateY(1px);
+}
+
+.chip .glyph {
+  color: var(--accent);
+}
+
+/* ------------------------------
+   Scroll reveals: content is always readable
+   even when scripting or motion is unavailable.
+   ------------------------------ */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(42px);
+  transition:
+    opacity 780ms var(--ease-out),
+    transform 780ms var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal-ready [data-reveal].panel {
+  transform: translateY(42px) scale(0.98);
+}
+
+.reveal-ready [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Scroll-drawn rules and labels. */
+.reveal-ready .section-head[data-reveal] .section-head__rule {
+  transform: scaleX(0);
+}
+
+.reveal-ready .section-head[data-reveal].is-visible .section-head__rule {
+  transform: scaleX(1);
+  transition: transform 920ms var(--ease-out) 180ms;
+}
+
+:is(.piece__label, .service__label, .about__label, .contact__label)::before {
+  transform-origin: left center;
+  transition: transform 700ms var(--ease-out);
+}
+
+.reveal-ready [data-reveal] :is(.piece__label, .service__label, .about__label, .contact__label)::before {
+  transform: scaleX(0);
+}
+
+.reveal-ready [data-reveal].is-visible :is(.piece__label, .service__label, .about__label, .contact__label)::before {
+  transform: scaleX(1);
+}
+
+/* Section headings settle after their rule draws. */
+.reveal-ready .section-head[data-reveal] .section-head__row {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 700ms var(--ease-out) 90ms,
+    transform 700ms var(--ease-out) 90ms;
+}
+
+.reveal-ready .section-head[data-reveal].is-visible .section-head__row {
+  opacity: 1;
+  transform: none;
+}
+
+/* Project media and title blocks arrive from different depths. */
+.reveal-ready .piece .still {
+  opacity: 0;
+  transform: translateY(20px) scale(0.985);
+  transition:
+    opacity 780ms var(--ease-out) 80ms,
+    transform 780ms var(--ease-out) 80ms;
+}
+
+.reveal-ready .piece.is-visible .still {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-ready .piece .piece__head {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 700ms var(--ease-out) 60ms,
+    transform 700ms var(--ease-out) 60ms;
+}
+
+.reveal-ready .piece.is-visible .piece__head {
+  opacity: 1;
+  transform: none;
+}
+
+/* Service copy arrives with its capability cluster. */
+.reveal-ready .service .service__main {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 650ms var(--ease-out) 60ms,
+    transform 650ms var(--ease-out) 60ms;
+}
+
+.reveal-ready .service.is-visible .service__main {
+  opacity: 1;
+  transform: none;
+}
+
+/* Card interiors arrive in sequence, not as one flat block. */
+.reveal-ready .piece .piece__content > .piece__block {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 650ms var(--ease-out),
+    transform 650ms var(--ease-out);
+}
+
+.reveal-ready .piece.is-visible .piece__content > .piece__block {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-ready .piece.is-visible .piece__content > .piece__block:nth-of-type(1) {
+  transition-delay: 110ms;
+}
+
+.reveal-ready .piece.is-visible .piece__content > .piece__block:nth-of-type(2) {
+  transition-delay: 190ms;
+}
+
+.reveal-ready .piece.is-visible .piece__content > .piece__block:nth-of-type(3) {
+  transition-delay: 270ms;
+}
+
+.reveal-ready .piece .piece__spec {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 650ms var(--ease-out) 160ms,
+    transform 650ms var(--ease-out) 160ms;
+}
+
+.reveal-ready .piece.is-visible .piece__spec {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-ready .service .service__side {
+  opacity: 0;
+  transform: translateX(18px);
+  transition:
+    opacity 650ms var(--ease-out) 160ms,
+    transform 650ms var(--ease-out) 160ms;
+}
+
+.reveal-ready .service.is-visible .service__side {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --line: rgba(28, 27, 24, 0.3);
+    --line-strong: rgba(28, 27, 24, 0.5);
+    --muted: #24211d;
+    --quiet: #2d2924;
+  }
+
+  .panel,
+  .well,
+  .action,
+  .button,
+  .chip,
+  .email-copy__button {
+    border-color: var(--line-strong);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+@media print {
+  .scroll-progress,
+  .skip-link,
+  .surface-atmosphere,
+  .surface-grain,
+  .surface-contours {
+    display: none !important;
+  }
+
+  .reveal-ready [data-reveal],
+  .reveal-ready [data-reveal] * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  body {
+    font-size: 11pt;
+  }
+
+  a {
+    color: #000 !important;
+  }
+}

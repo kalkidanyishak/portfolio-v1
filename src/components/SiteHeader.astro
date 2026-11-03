@@ -1,0 +1,458 @@
+---
+import { navigation, site, socials } from '../data/site';
+---
+
+<header class="site-header" data-site-header>
+  <div class="shell">
+    <div class="site-header__inner">
+      <a class="brand" href="/" aria-label={`${site.name}, home`}>
+        <span class="brand__mark" aria-hidden="true">K</span>
+        <span class="brand__name">{site.displayName}</span>
+      </a>
+
+      <nav class="primary-nav" aria-label="Primary">
+        {navigation.map((item) => (
+          <a href={item.href} data-nav>{item.label}</a>
+        ))}
+      </nav>
+
+      <div class="site-header__actions">
+        <a class="header-write" href="/#contact">
+          <span>Write</span>
+          <span class="header-write__dot" aria-hidden="true"></span>
+        </a>
+        <button
+          class="menu-button"
+          type="button"
+          aria-label="Open navigation menu"
+          aria-controls="mobile-navigation"
+          aria-expanded="false"
+          data-menu-open
+        >
+          <span>Menu</span>
+          <span class="menu-button__lines" aria-hidden="true"><i></i><i></i></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<dialog id="mobile-navigation" class="mobile-menu" aria-labelledby="mobile-navigation-title" data-mobile-menu>
+  <div class="mobile-menu__inner">
+    <div class="mobile-menu__top">
+      <a class="brand" href="/" aria-label={`${site.name}, home`} data-menu-link>
+        <span class="brand__mark" aria-hidden="true">K</span>
+        <span class="brand__name">{site.displayName}</span>
+      </a>
+      <button class="mobile-menu__close" type="button" aria-label="Close navigation menu" data-menu-close>
+        <span>Close</span>
+      </button>
+    </div>
+
+    <h2 id="mobile-navigation-title" class="sr-only">Site navigation</h2>
+    <nav class="mobile-menu__nav" aria-label="Mobile">
+      <a href="/#work" data-menu-link>Work</a>
+      <a href="/#services" data-menu-link>Services</a>
+      <a href="/#about" data-menu-link>About</a>
+      <a href="/#contact" data-menu-link>Write</a>
+    </nav>
+
+    <div class="mobile-menu__footer">
+      <a class="mobile-menu__email" href={`mailto:${site.email}`}>{site.email}</a>
+      <div class="mobile-menu__socials">
+        {socials.map((social) => (
+          <a href={social.href} target="_blank" rel="noopener noreferrer">
+            {social.label}<span class="sr-only"> (opens in a new tab)</span>
+          </a>
+        ))}
+        <a href="/resume/">Résumé</a>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 60;
+    padding-block: 10px;
+    background: transparent;
+    transition:
+      padding 280ms var(--ease),
+      transform 320ms var(--ease);
+    will-change: transform;
+  }
+
+  .site-header.is-hidden {
+    transform: translateY(calc(-100% - 12px));
+  }
+
+  .site-header__inner {
+    display: flex;
+    min-height: 58px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 6px 8px 6px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 18px;
+    background-color: var(--surface);
+    background-image: url('/images/bg-texture.webp');
+    background-position: center;
+    background-size: cover;
+    background-blend-mode: soft-light;
+    box-shadow: var(--raise-sm);
+    transition: box-shadow 280ms var(--ease);
+  }
+
+  .site-header.is-scrolled .site-header__inner {
+    box-shadow: var(--raise);
+  }
+
+  .brand {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 11px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .brand__mark {
+    display: grid;
+    transition:
+      box-shadow 220ms var(--ease),
+      color 200ms ease,
+      transform 220ms var(--ease);
+    width: 34px;
+    height: 34px;
+    flex: none;
+    place-items: center;
+    border-radius: 11px;
+    background: var(--surface);
+    box-shadow: var(--raise-sm);
+    color: var(--accent);
+    font-size: 0.84rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+  }
+
+  .brand:hover .brand__mark,
+  .brand:focus-visible .brand__mark {
+    box-shadow: var(--sink-sm);
+    color: var(--accent-deep);
+    transform: translateY(1px);
+  }
+
+  .brand__name {
+    font-size: 0.92rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .primary-nav {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 4px;
+    border-radius: 12px;
+    background: var(--surface-low);
+    box-shadow: var(--sink-sm);
+  }
+
+  .primary-nav a {
+    position: relative;
+    display: inline-flex;
+    min-height: 38px;
+    align-items: center;
+    padding: 0 16px;
+    border-radius: 9px;
+    color: var(--quiet);
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    transition:
+      background-color 200ms ease,
+      box-shadow 240ms var(--ease),
+      color 200ms ease;
+  }
+
+  .primary-nav a::after {
+    position: absolute;
+    right: 16px;
+    bottom: 7px;
+    left: 16px;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--accent);
+    content: '';
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 300ms var(--ease);
+  }
+
+  .primary-nav a:hover::after,
+  .primary-nav a:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  .primary-nav a.is-active::after {
+    display: none;
+  }
+
+  .primary-nav a:hover,
+  .primary-nav a:focus-visible {
+    color: var(--ink);
+  }
+
+  .primary-nav a.is-active {
+    background: var(--surface);
+    box-shadow: var(--raise-sm);
+    color: var(--ink);
+  }
+
+  .site-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .header-write {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 9px;
+    padding: 0 16px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 999px;
+    background: var(--surface);
+    box-shadow: var(--raise-sm);
+    color: var(--ink);
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      box-shadow 240ms var(--ease),
+      color 200ms ease,
+      transform 240ms var(--ease);
+  }
+
+  .header-write:hover,
+  .header-write:focus-visible {
+    box-shadow: var(--sink-sm);
+    color: var(--accent-deep);
+    transform: translateY(1px);
+  }
+
+  .header-write__dot {
+    width: 7px;
+    height: 7px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 15%, transparent);
+    animation: write-pulse 3.8s ease-in-out infinite;
+  }
+
+  @keyframes write-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 15%, transparent);
+    }
+    50% {
+      box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 8%, transparent);
+    }
+  }
+
+  .menu-button,
+  .mobile-menu__close {
+    display: none;
+    min-height: 44px;
+    align-items: center;
+    gap: 10px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--surface);
+    box-shadow: var(--raise-sm);
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: box-shadow 200ms var(--ease);
+  }
+
+  .menu-button:active,
+  .mobile-menu__close:active {
+    box-shadow: var(--sink-sm);
+  }
+
+  .menu-button__lines {
+    display: flex;
+    width: 17px;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+  }
+
+  .menu-button__lines i:last-child {
+    width: 62%;
+    transition: width 240ms var(--ease);
+  }
+
+  .menu-button:hover .menu-button__lines i:last-child,
+  .menu-button:focus-visible .menu-button__lines i:last-child {
+    width: 100%;
+  }
+
+  .menu-button__lines i {
+    display: block;
+    height: 1.5px;
+    border-radius: 1px;
+    background: currentColor;
+  }
+
+  .mobile-menu {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: var(--surface);
+    color: var(--ink);
+  }
+
+  .mobile-menu::backdrop {
+    background: rgba(28, 27, 24, 0.32);
+  }
+
+  .mobile-menu[open] {
+    animation: menu-in 240ms var(--ease-out) both;
+  }
+
+  @keyframes menu-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .mobile-menu__inner {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    padding: 0 var(--gutter) max(32px, env(safe-area-inset-bottom));
+  }
+
+  .mobile-menu__top {
+    display: flex;
+    min-height: 72px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .mobile-menu__nav {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    padding-block: 32px;
+  }
+
+  .mobile-menu__nav a {
+    display: flex;
+    min-height: 64px;
+    align-items: center;
+    gap: 14px;
+    padding: 0 20px;
+    border-radius: 16px;
+    background: var(--surface);
+    box-shadow: var(--raise-sm);
+    font-size: clamp(1.5rem, 7vw, 2rem);
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    text-decoration: none;
+    transition:
+      box-shadow 240ms var(--ease),
+      transform 240ms var(--ease);
+  }
+
+  .mobile-menu__nav a:hover,
+  .mobile-menu__nav a:focus-visible {
+    transform: translateX(4px);
+  }
+
+  .mobile-menu__nav a:active {
+    box-shadow: var(--sink-sm);
+  }
+
+
+  .mobile-menu__footer {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+
+  .mobile-menu__email {
+    font-size: 1rem;
+    overflow-wrap: anywhere;
+  }
+
+  .mobile-menu__socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+
+  .mobile-menu__socials a {
+    display: inline-flex;
+    min-height: 36px;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .mobile-menu__socials a:hover {
+    color: var(--accent-deep);
+  }
+
+  @media (max-width: 960px) {
+    .primary-nav,
+    .header-write {
+      display: none;
+    }
+
+    .menu-button {
+      display: inline-flex;
+    }
+  }
+
+  @media (max-width: 960px) and (min-width: 1px) {
+    .mobile-menu__close {
+      display: inline-flex;
+    }
+  }
+
+  @media (min-width: 961px) {
+    .mobile-menu {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-header {
+      transition: none;
+    }
+
+    .mobile-menu[open],
+    .header-write__dot {
+      animation: none;
+    }
+  }
+</style>
