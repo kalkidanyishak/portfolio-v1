@@ -121,9 +121,15 @@ html::-webkit-scrollbar {
   display: none;
 }
 
-/* Chapters are screens, not a continuous scroll. */
-@media (min-width: 1280px) and (min-height: 760px) and (prefers-reduced-motion: no-preference) {
+/* Chapters are screens, not a continuous scroll.
+   Proximity is the safe default; the motion script upgrades to mandatory
+   only when every chapter actually fits the viewport. */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
   html.snap-page {
+    scroll-snap-type: y proximity;
+  }
+
+  html.snap-page.snap-fit {
     scroll-snap-type: y mandatory;
   }
 }
