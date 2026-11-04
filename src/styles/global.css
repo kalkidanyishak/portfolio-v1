@@ -121,15 +121,7 @@ html::-webkit-scrollbar {
   display: none;
 }
 
-/* Chapters are screens, not a continuous scroll.
-   Small viewports get proximity so tall cards remain scrollable. */
-@media (prefers-reduced-motion: no-preference) {
-  html.snap-page {
-    scroll-snap-type: y proximity;
-  }
-}
-
-/* Full screen-by-screen paging only where a chapter fits the viewport. */
+/* Chapters are screens, not a continuous scroll. */
 @media (min-width: 1280px) and (min-height: 760px) and (prefers-reduced-motion: no-preference) {
   html.snap-page {
     scroll-snap-type: y mandatory;
