@@ -222,54 +222,6 @@ function initChrome(): Cleanup {
 }
 
 /* ---------------------------------------------------------
-   Scroll snapping. Mandatory only when every chapter fits,
-   so shorter windows get proximity instead of clipped pages.
-   --------------------------------------------------------- */
-function initSnapFit(): Cleanup {
-  const root = document.documentElement;
-  if (!root.classList.contains('snap-page')) return () => {};
-
-  const chapters = Array.from(document.querySelectorAll<HTMLElement>('.chapter'));
-  if (chapters.length === 0) return () => {};
-
-  let frame = 0;
-
-  const measure = () => {
-    frame = 0;
-    const fits =
-      window.innerWidth >= 1024 &&
-      chapters.every((chapter) => {
-        const shell = chapter.querySelector<HTMLElement>(':scope > .shell');
-        const contentBottom = shell ? shell.offsetTop + shell.offsetHeight : chapter.offsetHeight;
-        return contentBottom <= window.innerHeight + 12;
-      });
-    root.classList.toggle('snap-fit', fits);
-  };
-
-  const schedule = () => {
-    if (frame) return;
-    frame = window.requestAnimationFrame(measure);
-  };
-
-  schedule();
-  listen(window, 'resize', schedule);
-  listen(window, 'orientationchange', schedule);
-
-  const observer = 'ResizeObserver' in window ? new ResizeObserver(schedule) : null;
-  if (observer) {
-    for (const chapter of chapters) observer.observe(chapter);
-  }
-
-  document.fonts?.ready.then(schedule).catch(() => {});
-
-  return () => {
-    if (frame) window.cancelAnimationFrame(frame);
-    observer?.disconnect();
-    root.classList.remove('snap-fit');
-  };
-}
-
-/* ---------------------------------------------------------
    Generated surface layers drift at two depths.
    --------------------------------------------------------- */
 function initSurfaces(): Cleanup {
@@ -589,7 +541,6 @@ function bootMotion(): void {
   cleanups.length = 0;
   tasks.length = 0;
 
-  cleanups.push(initSnapFit());
   cleanups.push(initChrome());
 
   if (!reduceMotion.matches) {
