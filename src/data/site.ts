@@ -6,7 +6,7 @@ export const site = {
   location: 'Addis Ababa, Ethiopia',
   email: 'kalkidanyishak001@gmail.com',
   description:
-    'Kalkidan Yishak Zerihun is a fullstack developer in Addis Ababa building web platforms across hospitality and public health.',
+    'Kalkidan Yishak Zerihun is a fullstack developer in Addis Ababa building web platforms across hospitality, food service and public health.',
   links: {
     github: 'https://github.com/kalkidanyishak',
     linkedin: 'https://www.linkedin.com/in/kalkidanyishak/',

@@ -58,6 +58,35 @@ export const featuredProject: Project = {
 
 export const supportingProjects: Project[] = [
   {
+    id: 'mercyplc',
+    sector: 'Food service',
+    year: '2026 to Present',
+    title: 'Mercy PLC',
+    fullName: 'Restaurant management and bakery operations',
+    client: 'Mercy PLC · via Sabeh Systems',
+    role: 'Developer & maintainer',
+    summary:
+      'A restaurant and bakery group running on two connected systems: full restaurant management for Mercy Fruit Salad and a public storefront with an admin back office for Buhey Bakery.',
+    contribution:
+      'Built Fruit Salad end to end: POS, kitchen display, analytics, menu, inventory, staff roles, database and deployment. For Buhey Bakery, added catalogue and admin features; I now handle fixes, releases and servers.',
+    scope: [
+      'Fruit Salad: POS, kitchen display, analytics, menu, inventory and staff roles.',
+      'Buhey Bakery: catalogue, admin dashboard, fixes and releases on Next.js and Django.',
+      'Database and server deployment for both products.',
+    ],
+    stack: ['Next.js', 'Django', 'REST APIs'],
+    liveUrl: 'https://mercyplc.org/',
+    liveLabel: 'Visit Mercy PLC',
+    image: {
+      base: '/images/mercyplc-home',
+      widths: [640, 960, 1440],
+      width: 1440,
+      height: 739,
+      alt: 'The Mercy PLC landing page, presenting its two products: Mercy Fruit Salad and Buhey Bakery.',
+    },
+    imageNote: 'Product hub · fruitsalad.mercyplc.org and buhe.mercyplc.org · captured November 2026',
+  },
+  {
     id: 'epsirs',
     sector: 'Public health',
     year: '2026 to Present',

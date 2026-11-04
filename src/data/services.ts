@@ -9,7 +9,7 @@ export const services = [
       'Authentication and account areas',
       'Reusable component systems',
     ],
-    proof: 'Kerawi International Hotel · ePSIRS',
+    proof: 'Mercy PLC · Kerawi International Hotel · ePSIRS',
   },
   {
     title: 'Dashboards, internal tools & API integrations',
@@ -21,7 +21,7 @@ export const services = [
       'REST API integration',
       'Responsive data-heavy interfaces',
     ],
-    proof: 'CUAMM EMR Dashboard · ePSIRS',
+    proof: 'CUAMM EMR Dashboard · ePSIRS · Mercy PLC',
   },
   {
     title: 'Backend systems, databases & deployment',
@@ -33,7 +33,7 @@ export const services = [
       'Linux and VPS deployment',
       'Production setup and release support',
     ],
-    proof: 'Kerawi International Hotel · Agricultural Data Platform',
+    proof: 'Kerawi International Hotel · Mercy PLC · Agricultural Data Platform',
   },
 ] as const;
 

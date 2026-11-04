@@ -12,7 +12,7 @@ const work = [featuredProject, ...supportingProjects];
 
 const siteUrl = Astro.site?.toString() ?? 'https://resume-aby.pages.dev';
 const pageDescription =
-  'Fullstack developer in Addis Ababa building booking platforms, patient-safety systems and healthcare dashboards, from interface through PostgreSQL to deployment.';
+  'Fullstack developer in Addis Ababa building booking platforms, restaurant systems, patient-safety platforms and healthcare dashboards, from interface through PostgreSQL to deployment.';
 
 const structuredData = [
   {
@@ -37,6 +37,7 @@ const structuredData = [
       'TypeScript',
       'PostgreSQL',
       'REST API integration',
+      'Django',
       'ElysiaJS',
       'Linux server deployment',
     ],
@@ -56,7 +57,7 @@ const structuredData = [
   title="Kalkidan Yishak Zerihun · Fullstack Developer, Addis Ababa"
   description={pageDescription}
   ogTitle="Kalkidan Yishak Zerihun. Thoughtful interfaces. Working systems."
-  ogDescription="Fullstack developer in Addis Ababa. Booking platforms, patient-safety systems and healthcare dashboards, built from interface to deployment."
+  ogDescription="Fullstack developer in Addis Ababa. Booking platforms, restaurant systems, patient-safety platforms and healthcare dashboards, built from interface to deployment."
   htmlClass="snap-page"
   structuredData={structuredData}
 >
@@ -105,7 +106,7 @@ const structuredData = [
         <dl class="hero__readout">
           <div>
             <dt>In production</dt>
-            <dd>Three products</dd>
+            <dd>Four products</dd>
           </div>
           <div>
             <dt>Domains</dt>
@@ -132,9 +133,9 @@ const structuredData = [
           <span class="section-head__rule" aria-hidden="true"></span>
         </div>
         <div class="section-head__row">
-          <h2 id="work-title" data-parallax="0.022">Three products in live environments.</h2>
+          <h2 id="work-title" data-parallax="0.022">Four products in live environments.</h2>
           <p class="section-head__lede">
-            Across hospitality and public health. Each note states exactly what I was responsible for.
+            Across hospitality, food service and public health. Each note states exactly what I was responsible for.
           </p>
         </div>
       </header>
@@ -174,7 +175,7 @@ const structuredData = [
         <div class="shell">
           <div class="project__meta" data-reveal>
             <p class="eyebrow">Selected work</p>
-            <p class="mono">Project 0{index + 1} / 03</p>
+            <p class="mono">Project 0{index + 1} / 0{work.length}</p>
           </div>
 
           <article class="piece panel" data-glare data-reveal>
@@ -427,7 +428,7 @@ const structuredData = [
             <div class="about__note">
               <p class="about__note-label">Experience</p>
               <p>
-                My work has moved across hospitality, a national patient-safety platform, and health-service reporting for facilities and IDP sites. Alongside client work, I lead technical communities and mentor developers on modern frontend architecture and Next.js.
+                My work has moved across hospitality, restaurant and bakery operations, a national patient-safety platform, and health-service reporting for facilities and IDP sites. Alongside client work, I lead technical communities and mentor developers on modern frontend architecture and Next.js.
               </p>
             </div>
           </div>

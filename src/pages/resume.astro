@@ -4,6 +4,7 @@ import { site } from '../data/site';
 import { resume } from '../data/resume';
 import { featuredProject, supportingProjects, explorations } from '../data/projects';
 
+const mercy = supportingProjects.find((project) => project.id === 'mercyplc')!;
 const epsirs = supportingProjects.find((project) => project.id === 'epsirs')!;
 const cuamm = supportingProjects.find((project) => project.id === 'cuamm')!;
 
@@ -70,6 +71,23 @@ const pageDescription =
               </ul>
               <p class="resume-stack"><span class="mono">Stack</span> {featuredProject.stack.join(', ')}</p>
               <a class="resume-project-link" href={featuredProject.liveUrl} target="_blank" rel="noopener noreferrer">kerawiinternationalhotel.com <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
+            </article>
+
+            <article class="resume-project">
+              <div class="resume-entry__top">
+                <div>
+                  <h3>Mercy PLC: Restaurant &amp; Bakery Systems</h3>
+                  <p class="resume-entry__org">Mercy PLC · via Sabeh Systems</p>
+                </div>
+                <p class="mono">2026 to Present</p>
+              </div>
+              <p class="resume-entry__role">Developer &amp; Maintainer</p>
+              <ul class="resume-bullets">
+                <li>Built the Mercy Fruit Salad restaurant management system end to end: POS and order flow, kitchen display, sales analytics, menu and inventory, staff authentication and roles, database and deployment.</li>
+                <li>Added product catalogue and admin dashboard features to Buhey Bakery’s Next.js and Django platform, and manage ongoing bug fixes, API changes, releases and server operations.</li>
+              </ul>
+              <p class="resume-stack"><span class="mono">Stack</span> {mercy.stack.join(', ')}</p>
+              <a class="resume-project-link" href={mercy.liveUrl} target="_blank" rel="noopener noreferrer">mercyplc.org <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
             </article>
 
             <article class="resume-project">

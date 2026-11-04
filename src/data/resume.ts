@@ -1,6 +1,6 @@
 export const resume = {
   summary:
-    'Fullstack developer specializing in Next.js and modern web architecture, with hands-on experience across health-tech, hospitality, and blockchain domains. Enjoys building advanced, reusable React components, Linux/VPS server administration, deployment pipelines, and optimizing coding agents for productivity.',
+    'Fullstack developer specializing in Next.js and modern web architecture, with hands-on experience across health-tech, hospitality, restaurant operations, and blockchain domains. Enjoys building advanced, reusable React components, Linux/VPS server administration, deployment pipelines, and optimizing coding agents for productivity.',
   skillGroups: [
     {
       label: 'Languages',
